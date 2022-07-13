@@ -77,7 +77,6 @@ class Lesson(models.Model):
 
 
 # Enrollment model
-# <HINT> Once a user enrolled a class, an enrollment entry should be created between the user and course
 # And we could use the enrollment to track information such as exam submissions
 class Enrollment(models.Model):
     AUDIT = 'audit'
@@ -101,14 +100,14 @@ class Question(models.Model):
     content= models.TextField()
     grade = models.IntegerField()
 
-    # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
-       all_answers = self.choice_set.filter(is_correct=True).count()
-       selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
-       if all_answers == selected_correct:
-           return True
-       else:
-           return False
+        all_answers = self.choice_set.filter(is_correct=True).count()
+        selected_total = self.choice_set.filter(id__in=selected_ids).count()
+        selected_correct = self.choice_set.filter(is_correct=True, id__in=selected_ids).count()
+        if all_answers == selected_correct == selected_total:
+            return True
+        else:
+            return False
 
 
 
